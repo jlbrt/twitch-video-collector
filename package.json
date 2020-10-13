@@ -1,0 +1,40 @@
+{
+  "name": "twitch-video-collector",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/index.js",
+    "build": "tsc --project tsconfig.json",
+    "dev": "nodemon --config nodemon.json",
+    "db:migrate:dev": "ts-node scripts/migrateDB.ts",
+    "db:rollback:dev": "ts-node scripts/rollbackDB.ts",
+    "lint": "prettier --check ./src ./scripts ./migrations"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.8",
+    "@types/express": "^4.17.8",
+    "@types/helmet": "0.0.48",
+    "@types/joi": "^14.3.4",
+    "@types/node": "^14.11.8",
+    "@types/tmi.js": "^1.4.2",
+    "nodemon": "^2.0.4",
+    "prettier": "^2.1.2",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "get-youtube-id": "^1.0.1",
+    "googleapis": "^61.0.0",
+    "helmet": "^4.1.1",
+    "joi": "^17.2.1",
+    "knex": "^0.21.6",
+    "pg": "^8.4.1",
+    "tmi.js": "^1.5.0"
+  }
+}

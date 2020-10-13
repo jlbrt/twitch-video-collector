@@ -15,7 +15,11 @@ export const createAndStartBot = async () => {
       username: env.twitchAuthUsername,
       password: env.twitchAuthOauthPassword,
     },
-    channels: [env.targetTwitchChannel],
+    channels: [
+      `${env.targetTwitchChannel.startsWith('#') ? '' : '#'}${
+        env.targetTwitchChannel
+      }`,
+    ],
   };
 
   const tmiClient = tmi.client(tmiClientOptions);

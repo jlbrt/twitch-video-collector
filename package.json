@@ -8,6 +8,8 @@
     "start": "node dist/index.js",
     "build": "mkdir -p dist/src/webserver && cp -R ./src/webserver/public ./dist/src/webserver/public && tsc --project tsconfig.json",
     "dev": "nodemon --config nodemon.json",
+    "db:migrate": "node dist/scripts/migrateDB.js",
+    "db:rollback": "node dist/scripts/rollbackDB.js",
     "db:migrate:dev": "ts-node scripts/migrateDB.ts",
     "db:rollback:dev": "ts-node scripts/rollbackDB.ts",
     "lint": "prettier --check ./src ./scripts ./migrations"

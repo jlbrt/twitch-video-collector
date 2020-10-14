@@ -1,168 +1,106 @@
-const renderCard = (cardData) => {
-  return `
-    <a href="${cardData.targetLink}" target="_blank" class="card_wrapper_link">
-        <div class="card">
-          <img src="${cardData.thumbnail}" alt="" />
-          <div class="content">
-            <h2>${cardData.heading}</h2>
-            <p class="card-subheading">${cardData.subheading}</p>
-            <p title="${cardData.voters.join(', ')}"><b>Chat-Votes:</b> ${
-    cardData.votes
-  }</p>
-            <p><b>Like/Dislike:</b> ${cardData.likeRatio}%</p>
-            <p><b>Views:</b> ${cardData.views}</p>
-          </div>
-        </div>
-      </a>
-    `;
-};
-
-const renderCardsToDOM = (cards) => {
-  const main = document.querySelector('.main');
-
-  const cardsNode = cards.join('\n');
-
-  main.innerHTML = cardsNode;
-};
-
 const sanitizeHTML = (str) => {
   const temp = document.createElement('div');
   temp.textContent = str;
   return temp.innerHTML;
 };
 
-const resetAndRenderCardsList = async (fromTimestamp = 0) => {
-  const suggestionsRes = await fetch(
-    `/suggestions?fromTimestamp=${fromTimestamp}`
+const renderVideos = (videos) => {
+  const videoElements = videos.map((v) => {
+    return `
+    <article class="videos__item">
+    <a href="https://www.youtube.com/watch?v=${
+      v.youtubeId
+    }" class="videos__image">
+      <img
+        src="${v.thumbnail}"
+        alt=""
+      />
+    </a>
+    <div class="videos__content">
+      <h2>
+        <a href="https://www.youtube.com/watch?v=${
+          v.youtubeId
+        }" target="_blank">${sanitizeHTML(v.title)}</a>
+      </h2>
+      <ul>
+        <li>${sanitizeHTML(v.channelTitle)}</li>
+        <li>${new Date(v.publishedAt).toLocaleDateString()}</li>
+      </ul>
+      <ul>
+        <li>Chat-Votes <b>${v.votes.length}</b></li>
+        <li>Likes <b>${Math.round(
+          (v.likeCount / (v.likeCount + v.dislikeCount)) * 100
+        )}%</b></li>
+        <li>Views <b>${v.viewCount.toLocaleString()}</b></li>
+      </ul>
+    </div>
+  </article>
+    `;
+  });
+
+  const videoContainer = document.querySelector('#videos');
+  videoContainer.innerHTML = videoElements.join('\n');
+};
+
+const getVideos = async (fromTimestamp = new Date(0)) => {
+  const response = await fetch(
+    `/suggestions?fromTimestamp=${fromTimestamp.getTime()}`
   );
-  const { data: suggestions } = await suggestionsRes.json();
+  const responseData = await response.json();
 
-  const cards = suggestions.map((s) =>
-    renderCard({
-      targetLink: `https://www.youtube.com/watch?v=${sanitizeHTML(
-        s.youtubeId
-      )}`,
-      thumbnail: sanitizeHTML(s.thumbnail || ''),
-      heading: sanitizeHTML(s.title || ''),
-      subheading: `${new Date(
-        s.publishedAt
-      ).toLocaleDateString()} - ${sanitizeHTML(s.channelTitle)}`,
-      votes: s.votes.length,
-      voters: s.votes.map((v) => sanitizeHTML(v)),
-      likeRatio: Math.round(
-        (s.likeCount / (s.likeCount + s.dislikeCount)) * 100
-      ),
-      views: parseInt(s.viewCount).toLocaleString(),
-    })
-  );
-
-  renderCardsToDOM(cards);
+  return responseData.data;
 };
 
-//   const refreshbutton = document.querySelector('#button_refresh');
-const videosFromNowButton = document.querySelector('#button_videosFromNow');
-const videosAllButton = document.querySelector('#button_videosAll');
-const toggleRefreshButton = document.querySelector('#button_toggleRefresh');
-const postedSince = document.querySelector('#postedSince');
-
-const disableButtons = () => {
-  // refreshbutton.disabled = true;
-  videosFromNowButton.disabled = true;
-  videosAllButton.disabled = true;
-};
-const enableButtons = () => {
-  // refreshbutton.disabled = false;
-  videosFromNowButton.disabled = false;
-  videosAllButton.disabled = false;
+const setFromTimestamp = (fromTimestamp) => {
+  localStorage.setItem('fromTimestamp', fromTimestamp);
 };
 
-let selectedFromTimestamp =
-  parseInt(localStorage.getItem('fromTimestamp'), 10) || 0;
-
-const updatePostedSinceMessage = () => {
-  postedSince.textContent = `Es werden Videos angezeigt, die seit ${new Date(
-    selectedFromTimestamp
-  ).toLocaleString()} im Chat gepostet wurden.`;
+const getFromTimestamp = (fromTimestamp) => {
+  const res = localStorage.getItem('fromTimestamp', fromTimestamp);
+  return new Date(res || 0);
 };
 
-let refreshTimeout = null;
-let autoRefreshActive;
-const autoRefresh = () => {
-  autoRefreshActive = true;
-  refreshTimeout = setTimeout(async () => {
-    await resetAndRenderCardsList(selectedFromTimestamp);
+const getAndRenderVideos = async () => {
+  const videos = await getVideos(getFromTimestamp());
+  renderVideos(videos);
+};
+
+const registerEventListeners = () => {
+  const videosAllButton = document.querySelector('#videosAllButton');
+  const videosFromNowButton = document.querySelector('#videosFromNowButton');
+
+  const disableButtons = () => {
+    videosAllButton.disabled = true;
+    videosFromNowButton.disabled = true;
+  };
+  const enableButtons = () => {
+    videosAllButton.disabled = false;
+    videosFromNowButton.disabled = false;
+  };
+
+  videosAllButton.addEventListener('click', async () => {
+    disableButtons();
+    setFromTimestamp(new Date(0));
+    await getAndRenderVideos();
+    enableButtons();
+  });
+
+  videosFromNowButton.addEventListener('click', async () => {
+    disableButtons();
+    setFromTimestamp(new Date());
+    await getAndRenderVideos();
+    enableButtons();
+  });
+};
+
+const autoRefresh = async () => {
+  await getAndRenderVideos();
+  setTimeout(() => {
     autoRefresh();
   }, 5000);
 };
 
-const toggleRefresh = async () => {
-  if (autoRefreshActive) {
-    clearTimeout(refreshTimeout);
-    toggleRefreshButton.textContent = 'Aktualisieren fortsetzen';
-    autoRefreshActive = false;
-  } else {
-    await resetAndRenderCardsList(selectedFromTimestamp);
-    autoRefresh();
-    toggleRefreshButton.textContent = 'Aktualisieren unterbrechen';
-    autoRefreshActive = true;
-  }
-};
-
 (async () => {
-  await resetAndRenderCardsList(selectedFromTimestamp);
-
-  updatePostedSinceMessage();
-
-  autoRefresh();
-
-  //   {
-  //     refreshbutton.addEventListener('click', async (e) => {
-  //       e.preventDefault();
-
-  //       disableButtons();
-  //       await resetAndRenderCardsList(selectedFromTimestamp);
-  //       setTimeout(() => {
-  //         enableButtons();
-  //       }, 2000);
-  //     });
-  //   }
-
-  {
-    videosAllButton.addEventListener('click', async (e) => {
-      e.preventDefault();
-
-      disableButtons();
-      localStorage.setItem('fromTimestamp', 0);
-      selectedFromTimestamp = 0;
-      await resetAndRenderCardsList(selectedFromTimestamp);
-      updatePostedSinceMessage();
-      setTimeout(() => {
-        enableButtons();
-      }, 2000);
-    });
-  }
-
-  {
-    videosFromNowButton.addEventListener('click', async (e) => {
-      e.preventDefault();
-
-      disableButtons();
-      const time = new Date().getTime();
-      localStorage.setItem('fromTimestamp', time);
-      selectedFromTimestamp = time;
-      updatePostedSinceMessage();
-      await resetAndRenderCardsList(selectedFromTimestamp);
-      setTimeout(() => {
-        enableButtons();
-      }, 2000);
-    });
-  }
-
-  {
-    toggleRefreshButton.addEventListener('click', async (e) => {
-      e.preventDefault();
-
-      toggleRefresh();
-    });
-  }
+  await autoRefresh();
+  registerEventListeners();
 })();

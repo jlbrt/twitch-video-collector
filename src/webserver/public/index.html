@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>md7 Twitch Video Grabber</title>
-    <link rel="stylesheet" href="/assets/styles/main.css" />
+    <title>Twitch Video Grabber</title>
+
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
       rel="stylesheet"
     />
+
+    <link rel="stylesheet" href="/assets/styles/main.css" />
   </head>
   <body>
     <header class="header">
@@ -20,35 +22,26 @@
         Daniels Twitch Video Grabber
       </h1>
       <p>
-        Diese Seite soll dazu dienen, einen besseren Überblick über die
-        Videovorschläge im Chat von
+        Hier werden Videos aufgelistet, die im Chat von
         <a href="https://twitch.tv/moondye7" target="_blank"
           >Daniel (moondye7)</a
         >
-        zu bekommen. YouTube Links, die in den Twitch Chat gepostet werden,
-        werden automatisch hier aufgeführt und nach Votes -
-        <i>also wie oft der Link gepostet wurde</i> - sortiert. (Jeder Vote zu
-        einem Video wird nur 1x pro User gezählt 😉).
-        <br />
-        <br />
-        <small
-          >Falls jemand Kontakt mit mir Kontakt aufnehmen möchte:
-          <strong>Zemba#9998</strong> auf Discord</small
-        >
-        <br />
-        <br />
-        Diese Seite aktualisiert sich alle 5 Sekunden automatisch.
+        gepostet werden. Die Videos sind nach Votes
+        <i>- also wie oft der Link gepostet wurde -</i> sortiert. Jeder Vote
+        wird hierbei nur 1x pro User und Video gezählt 😉.
       </p>
-      <div class="buttons">
-        <!-- <button id="button_refresh">Aktualisieren</button> -->
-        <button id="button_videosFromNow">Nur Videos ab jetzt anzeigen</button>
-        <button id="button_videosAll">Alle Videos anzeigen</button>
-        <button id="button_toggleRefresh">Aktualisieren unterbrechen</button>
-      </div>
-      <br />
-      <small id="postedSince"></small>
+      <p><small>Für Kontaktanfragen: Zemba#9998 auf Discord</small></p>
     </header>
-    <main class="main"></main>
+    <main class="main">
+      <section class="controls">
+        <nav class="controlButtons">
+          <button id="videosAllButton">Alle Videos</button>
+          <button id="videosFromNowButton">Videos ab jetzt</button>
+        </nav>
+      </section>
+      <section class="videos" id="videos"></section>
+    </main>
+
     <script src="/assets/js/main.js"></script>
   </body>
 </html>

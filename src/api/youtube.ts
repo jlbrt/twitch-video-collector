@@ -47,7 +47,6 @@ export const getVideoById = async (
     dislikeCount:
       (statistics.dislikeCount && parseInt(statistics.dislikeCount, 10)) || 0,
     publishedAt:
-      (snippet.publishedAt && new Date(parseInt(snippet.publishedAt, 10))) ||
-      new Date(0),
+      (snippet.publishedAt && new Date(snippet.publishedAt)) || new Date(0),
   };
 };

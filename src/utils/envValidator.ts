@@ -2,7 +2,6 @@ import Joi from 'joi';
 
 export const validateEnvironmentVars = async () => {
   const schema = Joi.object({
-    PORT: Joi.number().port().required(),
     DBHOST: Joi.string().required(),
     DBPORT: Joi.number().port().required(),
     DBUSER: Joi.string().required(),

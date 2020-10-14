@@ -1,7 +1,6 @@
 import http from 'http';
 import * as logger from '../utils/logger';
 import { app } from './app';
-import { env } from '../env';
 
 export const createAndStartWebserver = () => {
   return new Promise((resolve, reject) => {
@@ -11,7 +10,7 @@ export const createAndStartWebserver = () => {
       return reject(err);
     });
 
-    const port = env.port;
+    const port = 3000;
     server.listen(port, () => {
       logger.log(`Web server listening on port ${port}`);
       return resolve();

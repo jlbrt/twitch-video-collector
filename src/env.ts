@@ -1,5 +1,4 @@
 export const env = Object.freeze({
-  port: parseInt(process.env.PORT as string, 10),
   targetTwitchChannel: process.env.TARGETTWICHCHANNEL as string,
   dbHost: process.env.DBHOST as string,
   dbPort: parseInt(process.env.DBPORT as string, 10),

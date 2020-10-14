@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/index.js",
+    "start": "node dist/src/index.js",
     "build": "mkdir -p dist/src/webserver && cp -R ./src/webserver/public ./dist/src/webserver/public && tsc --project tsconfig.json",
     "dev": "nodemon --config nodemon.json",
     "db:migrate": "node dist/scripts/migrateDB.js",

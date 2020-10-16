@@ -10,7 +10,7 @@ const renderVideos = (videos) => {
     <article class="videos__item">
     <a href="https://www.youtube.com/watch?v=${
       v.youtubeId
-    }" class="videos__image">
+    }" target="_blank" class="videos__image">
       <img
         src="${v.thumbnail}"
         alt=""

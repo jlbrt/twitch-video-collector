@@ -4,7 +4,7 @@ const sanitizeHTML = (str) => {
   return temp.innerHTML;
 };
 
-const renderVideos = (videos) => {
+const renderVideos = (videos, fromTimestampInfoMessage = '') => {
   const videoElements = videos.map((v) => {
     return `
     <article class="videos__item">
@@ -40,6 +40,9 @@ const renderVideos = (videos) => {
 
   const videoContainer = document.querySelector('#videos');
   videoContainer.innerHTML = videoElements.join('\n');
+
+  const fromTimestampInfo = document.querySelector('#fromTimestampInfo');
+  fromTimestampInfo.textContent = fromTimestampInfoMessage;
 };
 
 const getVideos = async (fromTimestamp = new Date(0)) => {
@@ -61,8 +64,15 @@ const getFromTimestamp = (fromTimestamp) => {
 };
 
 const getAndRenderVideos = async () => {
-  const videos = await getVideos(getFromTimestamp());
-  renderVideos(videos);
+  const fromTimestamp = getFromTimestamp();
+  const videos = await getVideos(fromTimestamp);
+
+  const fromTimestampInfoMessage =
+    fromTimestamp.getTime() === 0
+      ? 'Es werden alle Video angezeigt'
+      : `Es werden Videos angezeigt, die nach ${fromTimestamp.toLocaleString()} gepostet wurden`;
+
+  renderVideos(videos, fromTimestampInfoMessage);
 };
 
 const registerEventListeners = () => {

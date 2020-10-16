@@ -1,6 +1,6 @@
 {
   "name": "twitch-video-collector",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "dev": "nodemon --config nodemon.json",
     "db:migrate": "node dist/scripts/migrateDB.js",
     "db:rollback": "node dist/scripts/rollbackDB.js",
+    "db:clear": "node dist/scripts/clearDB",
     "db:migrate:dev": "ts-node scripts/migrateDB.ts",
     "db:rollback:dev": "ts-node scripts/rollbackDB.ts",
     "lint": "prettier --check ./src ./scripts ./migrations"

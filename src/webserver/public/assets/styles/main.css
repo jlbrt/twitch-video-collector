@@ -1,6 +1,7 @@
 body {
   background-color: #121212;
   font-family: 'Open Sans', sans-serif;
+  color: #f4f4f4;
   margin: 0 6rem;
   margin-bottom: 6rem;
 }
@@ -14,12 +15,10 @@ body {
 }
 
 .header h1 {
-  color: #f4f4f4;
   font-weight: 400;
 }
 
 .header p {
-  color: #f4f4f4;
   max-width: 1020px;
 }
 

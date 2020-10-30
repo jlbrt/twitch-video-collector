@@ -28,9 +28,11 @@ const renderVideos = (videos, fromTimestampInfoMessage = '') => {
       </ul>
       <ul>
         <li>Chat-Votes <b>${v.votes.length}</b></li>
-        <li>Likes <b>${Math.round(
-          (v.likeCount / (v.likeCount + v.dislikeCount)) * 100
-        )}%</b></li>
+        <li>Likes <b>${
+          v.likeCount || v.dislikeCount
+            ? Math.round((v.likeCount / (v.likeCount + v.dislikeCount)) * 100)
+            : 0
+        }%</b></li>
         <li>Views <b>${v.viewCount.toLocaleString()}</b></li>
       </ul>
     </div>

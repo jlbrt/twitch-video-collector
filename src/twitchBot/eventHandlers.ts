@@ -16,6 +16,11 @@ export const handleMessage = async (
   self: boolean
 ) => {
   try {
+    const ignoredUsers = ['supibot'];
+
+    if (!userstate.username) return;
+    if (ignoredUsers.includes(userstate.username)) return;
+
     const youtubeVideoId = utils.getYoutubeVideoIdFromString(message);
     if (!youtubeVideoId) return;
 
@@ -41,7 +46,6 @@ export const handleMessage = async (
       });
     }
 
-    if (!userstate.username) return;
     const existingSuggestion = await suggestionDAO.getSingleSuggestion({
       username: userstate.username,
       videoId: video.id,

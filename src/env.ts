@@ -7,8 +7,4 @@ export const env = Object.freeze({
   dbName: process.env.DBNAME as string,
 
   youtubeAuthToken: process.env.YOUTUBEAUTHTOKEN as string,
-
-  twitchAuthClientId: process.env.TWITCHAUTHCLIENTID as string,
-  twitchAuthUsername: process.env.TWITCHAUTHUSERNAME as string,
-  twitchAuthOauthPassword: process.env.TWITCHAUTHOAUTHPASSWORD as string,
 });

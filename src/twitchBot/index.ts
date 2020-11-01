@@ -4,16 +4,9 @@ import { env } from '../env';
 
 export const createAndStartBot = async () => {
   const tmiClientOptions: tmi.Options = {
-    options: {
-      clientId: env.twitchAuthClientId,
-    },
     connection: {
       reconnect: true,
       secure: true,
-    },
-    identity: {
-      username: env.twitchAuthUsername,
-      password: env.twitchAuthOauthPassword,
     },
     channels: [
       `${env.targetTwitchChannel.startsWith('#') ? '' : '#'}${

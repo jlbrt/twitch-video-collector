@@ -10,10 +10,6 @@ export const validateEnvironmentVars = async () => {
     TARGETTWICHCHANNEL: Joi.string().required(),
 
     YOUTUBEAUTHTOKEN: Joi.string().required(),
-
-    TWITCHAUTHCLIENTID: Joi.string().required(),
-    TWITCHAUTHUSERNAME: Joi.string().required(),
-    TWITCHAUTHOAUTHPASSWORD: Joi.string().required(),
   }).required();
 
   await schema.validateAsync(process.env, {

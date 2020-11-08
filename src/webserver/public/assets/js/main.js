@@ -80,14 +80,17 @@ const getAndRenderVideos = async () => {
 const registerEventListeners = () => {
   const videosAllButton = document.querySelector('#videosAllButton');
   const videosFromNowButton = document.querySelector('#videosFromNowButton');
+  const reloadButton = document.querySelector('#reloadButton');
 
   const disableButtons = () => {
     videosAllButton.disabled = true;
     videosFromNowButton.disabled = true;
+    reloadButton.disabled = true;
   };
   const enableButtons = () => {
     videosAllButton.disabled = false;
     videosFromNowButton.disabled = false;
+    reloadButton.disabled = false;
   };
 
   videosAllButton.addEventListener('click', async () => {
@@ -100,6 +103,12 @@ const registerEventListeners = () => {
   videosFromNowButton.addEventListener('click', async () => {
     disableButtons();
     setFromTimestamp(new Date());
+    await getAndRenderVideos();
+    enableButtons();
+  });
+
+  reloadButton.addEventListener('click', async () => {
+    disableButtons();
     await getAndRenderVideos();
     enableButtons();
   });

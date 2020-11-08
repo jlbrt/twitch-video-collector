@@ -105,14 +105,7 @@ const registerEventListeners = () => {
   });
 };
 
-const autoRefresh = async () => {
-  await getAndRenderVideos();
-  setTimeout(() => {
-    autoRefresh();
-  }, 5000);
-};
-
 (async () => {
-  await autoRefresh();
+  await getAndRenderVideos();
   registerEventListeners();
 })();

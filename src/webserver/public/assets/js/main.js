@@ -114,7 +114,19 @@ const registerEventListeners = () => {
   });
 };
 
+function feelsBirthdayMan() {
+  const now = new Date();
+  const isBirthday = now.getMonth() === 11 && now.getDate() === 3;
+  if (isBirthday) {
+    const headingImage = document.querySelector('#heading-image');
+    headingImage.src =
+      'https://cdn.betterttv.net/emote/55b6524154eefd53777b2580/3x';
+  }
+}
+
 (async () => {
+  feelsBirthdayMan();
+
   await getAndRenderVideos();
   registerEventListeners();
 })();

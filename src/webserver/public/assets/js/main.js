@@ -24,15 +24,15 @@ const renderVideos = (videos, fromTimestampInfoMessage = '') => {
       </h2>
       <ul>
         <li>${sanitizeHTML(v.channelTitle)}</li>
-        <li>${new Date(v.publishedAt).toLocaleDateString()}</li>
+        <li>${new Date(v.publishedAt).toLocaleDateString('de-DE', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        })}</li>
       </ul>
       <ul>
         <li>Chat-Votes <b>${v.votes.length}</b></li>
-        <li>Likes <b>${
-          v.likeCount || v.dislikeCount
-            ? Math.round((v.likeCount / (v.likeCount + v.dislikeCount)) * 100)
-            : 0
-        }%</b></li>
+        <li>Likes <b>${v.likeCount.toLocaleString()}</b></li>
         <li>Views <b>${v.viewCount.toLocaleString()}</b></li>
       </ul>
     </div>

@@ -8,7 +8,6 @@ interface DBVideo {
   channelTitle: string;
   viewCount: number;
   likeCount: number;
-  dislikeCount: number;
   publishedAt: Date;
 }
 
@@ -19,7 +18,6 @@ interface VideoWithSuggestions {
   channelTitle: string;
   viewCount: number;
   likeCount: number;
-  dislikeCount: number;
   votes: string[];
   publishedAt: Date;
   lastVote: Date;
@@ -37,7 +35,6 @@ export const getSingleVideoByYoutubeId = async (
       'channelTitle',
       'viewCount',
       'likeCount',
-      'dislikeCount',
       'publishedAt',
     ])
     .where({ youtubeId })
@@ -57,7 +54,6 @@ export const createSingleVideo = async (
     'channelTitle',
     'viewCount',
     'likeCount',
-    'dislikeCount',
     'publishedAt',
   ]);
 
@@ -77,7 +73,6 @@ export const getVideosWithSuggestions = async (
     channelTitle: string;
     viewCount: number;
     likeCount: number;
-    dislikeCount: number;
     publishedAt: Date;
   }
 
@@ -92,7 +87,6 @@ export const getVideosWithSuggestions = async (
       'videos.channelTitle',
       'videos.viewCount',
       'videos.likeCount',
-      'videos.dislikeCount',
       'videos.publishedAt',
     ])
     .innerJoin('videos', 'suggestions.videoId', 'videos.id')
@@ -108,7 +102,6 @@ export const getVideosWithSuggestions = async (
         channelTitle: suggestion.channelTitle,
         viewCount: suggestion.viewCount,
         likeCount: suggestion.likeCount,
-        dislikeCount: suggestion.dislikeCount,
         votes: [],
         publishedAt: suggestion.publishedAt,
         lastVote: suggestion.lastSuggestedAt,

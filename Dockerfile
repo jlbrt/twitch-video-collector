@@ -1,5 +1,5 @@
 # Build
-FROM node:12 as build
+FROM node:14 as build
 
 WORKDIR /usr/src/app
 COPY . .
@@ -8,7 +8,7 @@ RUN npm install
 RUN npm run build
 
 # Production Environment
-FROM node:12
+FROM node:14
 
 WORKDIR /usr/src/app
 

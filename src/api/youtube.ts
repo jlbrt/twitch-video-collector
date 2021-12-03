@@ -8,7 +8,6 @@ interface YouTubeVideo {
   channelTitle: string;
   viewCount: number;
   likeCount: number;
-  dislikeCount: number;
   publishedAt: Date;
 }
 
@@ -44,8 +43,6 @@ export const getVideoById = async (
       (statistics.viewCount && parseInt(statistics.viewCount, 10)) || 0,
     likeCount:
       (statistics.likeCount && parseInt(statistics.likeCount, 10)) || 0,
-    dislikeCount:
-      (statistics.dislikeCount && parseInt(statistics.dislikeCount, 10)) || 0,
     publishedAt:
       (snippet.publishedAt && new Date(snippet.publishedAt)) || new Date(0),
   };

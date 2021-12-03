@@ -41,7 +41,6 @@ export const handleMessage = async (
         channelTitle: youtubeVideo.channelTitle,
         viewCount: youtubeVideo.viewCount,
         likeCount: youtubeVideo.likeCount,
-        dislikeCount: youtubeVideo.dislikeCount,
         publishedAt: youtubeVideo.publishedAt,
       });
     }

@@ -24,15 +24,15 @@ const renderVideos = (videos, fromTimestampInfoMessage = '') => {
       </h2>
       <ul>
         <li>${sanitizeHTML(v.channelTitle)}</li>
-        <li>${new Date(v.publishedAt).toLocaleDateString()}</li>
+        <li>${new Date(v.publishedAt).toLocaleDateString('de-DE', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        })}</li>
       </ul>
       <ul>
         <li>Chat-Votes <b>${v.votes.length}</b></li>
-        <li>Likes <b>${
-          v.likeCount || v.dislikeCount
-            ? Math.round((v.likeCount / (v.likeCount + v.dislikeCount)) * 100)
-            : 0
-        }%</b></li>
+        <li>Likes <b>${v.likeCount.toLocaleString()}</b></li>
         <li>Views <b>${v.viewCount.toLocaleString()}</b></li>
       </ul>
     </div>
@@ -114,7 +114,19 @@ const registerEventListeners = () => {
   });
 };
 
+function feelsBirthdayMan() {
+  const now = new Date();
+  const isBirthday = now.getMonth() === 11 && now.getDate() === 3;
+  if (isBirthday) {
+    const headingImage = document.querySelector('#heading-image');
+    headingImage.src =
+      'https://cdn.betterttv.net/emote/55b6524154eefd53777b2580/3x';
+  }
+}
+
 (async () => {
+  feelsBirthdayMan();
+
   await getAndRenderVideos();
   registerEventListeners();
 })();

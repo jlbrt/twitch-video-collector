@@ -7,7 +7,7 @@ export const validateEnvironmentVars = async () => {
     DBUSER: Joi.string().required(),
     DBPASSWORD: Joi.string().required(),
     DBNAME: Joi.string().required(),
-    TARGETTWICHCHANNEL: Joi.string().required(),
+    TARGETTWITCHCHANNEL: Joi.string().required(),
 
     YOUTUBEAUTHTOKEN: Joi.string().required(),
   }).required();

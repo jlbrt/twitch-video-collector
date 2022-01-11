@@ -1,4 +1,4 @@
-import Knex from 'knex';
+import { Knex } from 'knex';
 
 export const up = async (dbConnection: Knex): Promise<void> => {
   await dbConnection.schema.createTable('videos', (table) => {

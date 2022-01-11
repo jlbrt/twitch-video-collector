@@ -11,7 +11,9 @@ export const registerCronjobs = () => {
         await dbConnection.raw('TRUNCATE "videos" CASCADE;');
         logger.log('Successfully cleared videos and suggestions');
       } catch (err) {
-        logger.log('error while clearing videos and suggestions', err);
+        if (err instanceof Error) {
+          logger.log('error while clearing videos and suggestions', err);
+        }
       }
     },
     null,

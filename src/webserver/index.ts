@@ -2,7 +2,7 @@ import http from 'http';
 import * as logger from '../utils/logger';
 import { app } from './app';
 
-export const createAndStartWebserver = () => {
+export const createAndStartWebserver = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     const server = http.createServer(app);
 

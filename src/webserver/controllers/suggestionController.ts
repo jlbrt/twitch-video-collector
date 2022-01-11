@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
 import * as videoDAO from '../../dao/videoDAO';
-import * as logger from '../../utils/logger';
 
 export const handleGetSuggestions = async (
   req: Request,

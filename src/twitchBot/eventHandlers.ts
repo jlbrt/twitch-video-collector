@@ -65,6 +65,8 @@ export const handleMessage = async (
       lastSuggestedAt: new Date(),
     });
   } catch (err) {
-    logger.log('Error occured while processing handleMessage', err);
+    if (err instanceof Error) {
+      logger.log('Error occured while processing handleMessage', err);
+    }
   }
 };

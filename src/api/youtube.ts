@@ -1,4 +1,4 @@
-import { google, youtube_v3 } from 'googleapis';
+import https from 'https';
 import { env } from '../env';
 
 interface YouTubeVideo {
@@ -11,39 +11,61 @@ interface YouTubeVideo {
   publishedAt: Date;
 }
 
-const youtube = google.youtube({
-  version: 'v3',
-  auth: env.youtubeAuthToken,
-});
+// TODO this code is not very pretty
+export const getVideoById = (id: string): Promise<YouTubeVideo | null> => {
+  return new Promise((resolve, reject) => {
+    let responseData = '';
 
-export const getVideoById = async (
-  id: string
-): Promise<YouTubeVideo | null> => {
-  const response = await youtube.videos.list({
-    part: ['snippet', 'statistics'],
-    id: [id],
+    const req = https.get(
+      `https://www.googleapis.com/youtube/v3/videos?key=${env.youtubeAuthToken}&part=snippet,statistics&id=${id}`,
+      (res) => {
+        res.setEncoding('utf-8');
+
+        if (res.statusCode !== 200) {
+          return reject('Could not fetch video data from YouTube API');
+        }
+
+        res.on('data', (chunk) => (responseData += chunk));
+
+        res.on('end', () => {
+          const responseJSON = JSON.parse(responseData);
+
+          if (!responseJSON.items || responseJSON.items.length < 1) {
+            resolve(null);
+          }
+
+          const videoData = responseJSON.items[0];
+
+          return resolve({
+            id: videoData.id as string,
+            title: videoData.snippet.title || '',
+            thumbnail:
+              videoData.snippet.thumbnails?.standard?.url ||
+              videoData.snippet.thumbnails?.default?.url ||
+              videoData.snippet.thumbnails?.medium?.url ||
+              '',
+            channelTitle: videoData.snippet.channelTitle || '',
+            viewCount:
+              (videoData.statistics.viewCount &&
+                parseInt(videoData.statistics.viewCount, 10)) ||
+              0,
+            likeCount:
+              (videoData.statistics.likeCount &&
+                parseInt(videoData.statistics.likeCount, 10)) ||
+              0,
+            publishedAt:
+              (videoData.snippet.publishedAt &&
+                new Date(videoData.snippet.publishedAt)) ||
+              new Date(0),
+          });
+        });
+      }
+    );
+
+    req.on('error', (err) => {
+      return reject(err);
+    });
+
+    req.end();
   });
-
-  if (!response.data.items || response.data.items.length === 0) return null;
-
-  const videoData = response.data.items[0];
-  const snippet = videoData.snippet as youtube_v3.Schema$VideoSnippet;
-  const statistics = videoData.statistics as youtube_v3.Schema$VideoStatistics;
-
-  return {
-    id: videoData.id as string,
-    title: snippet.title || '',
-    thumbnail:
-      snippet.thumbnails?.standard?.url ||
-      snippet.thumbnails?.default?.url ||
-      snippet.thumbnails?.medium?.url ||
-      '',
-    channelTitle: snippet.channelTitle || '',
-    viewCount:
-      (statistics.viewCount && parseInt(statistics.viewCount, 10)) || 0,
-    likeCount:
-      (statistics.likeCount && parseInt(statistics.likeCount, 10)) || 0,
-    publishedAt:
-      (snippet.publishedAt && new Date(snippet.publishedAt)) || new Date(0),
-  };
 };

@@ -1,5 +1,5 @@
 import path from 'path';
-import { dbConnection } from '../src/dao/db';
+import { dbConnection } from '../src/DAO/db';
 
 (async (): Promise<void> => {
   try {

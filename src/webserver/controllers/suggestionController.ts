@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
-import * as videoDAO from '../../dao/videoDAO';
+import * as videoDAO from '../../DAO/videoDAO';
 
 export const handleGetSuggestions = async (
   req: Request,
@@ -21,9 +21,8 @@ export const handleGetSuggestions = async (
     const reqQuery = await validateReqQuery(req.query);
     const fromTimestamp = new Date(reqQuery.fromTimestamp);
 
-    const videosWithSuggestions = await videoDAO.getVideosWithSuggestions(
-      fromTimestamp
-    );
+    const videosWithSuggestions =
+      await videoDAO.getVideosWithSuggestions(fromTimestamp);
 
     return res.json({
       data: videosWithSuggestions,

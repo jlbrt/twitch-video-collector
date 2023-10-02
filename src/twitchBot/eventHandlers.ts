@@ -1,7 +1,7 @@
 import tmi from 'tmi.js';
 import * as utils from './utils';
-import * as videoDAO from '../dao/videoDAO';
-import * as suggestionDAO from '../dao/suggestionDAO';
+import * as videoDAO from '../DAO/videoDAO';
+import * as suggestionDAO from '../DAO/suggestionDAO';
 import * as youtubeAPI from '../api/youtube';
 import * as logger from '../utils/logger';
 
@@ -24,9 +24,8 @@ export const handleMessage = async (
     const youtubeVideoId = utils.getYoutubeVideoIdFromString(message);
     if (!youtubeVideoId) return;
 
-    const existingVideo = await videoDAO.getSingleVideoByYoutubeId(
-      youtubeVideoId
-    );
+    const existingVideo =
+      await videoDAO.getSingleVideoByYoutubeId(youtubeVideoId);
 
     let video = existingVideo || null;
 

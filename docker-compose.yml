@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: node:16.13-alpine
+    image: node:18.18.0-alpine
     working_dir: /usr/src/app
     ports:
       - 3000:3000

@@ -1,5 +1,5 @@
 # Build
-FROM node:16.13-alpine as build
+FROM node:18.18.0-alpine as build
 
 WORKDIR /usr/src/app
 COPY . .
@@ -8,7 +8,7 @@ RUN npm install
 RUN npm run build
 
 # Production Environment
-FROM node:16.13-alpine
+FROM node:18.18.0-alpine
 
 WORKDIR /usr/src/app
 

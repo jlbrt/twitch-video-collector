@@ -14,6 +14,7 @@ WORKDIR /usr/src/app
 
 ENV NODE_ENV=production
 COPY ./package.json ./package.json
+COPY ./package-lock.json ./package-lock.json
 RUN npm install --production
 
 COPY --from=build /usr/src/app/dist /usr/src/app/dist

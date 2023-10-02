@@ -1,9 +1,9 @@
-import cron from 'cron';
+import { CronJob } from 'cron';
 import * as logger from '../utils/logger';
 import { dbConnection } from '../dao/db';
 
 export const registerCronjobs = () => {
-  const clearDatabaseJob = new cron.CronJob(
+  const clearDatabaseJob = new CronJob(
     '0 0 10 * * *',
     async () => {
       logger.log('Clearing videos and suggestions...');

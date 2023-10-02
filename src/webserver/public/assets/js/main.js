@@ -71,7 +71,7 @@ const getAndRenderVideos = async () => {
 
   const fromTimestampInfoMessage =
     fromTimestamp.getTime() === 0
-      ? 'Es werden alle Video angezeigt'
+      ? 'Es werden alle Videos angezeigt'
       : `Es werden Videos angezeigt, die nach ${fromTimestamp.toLocaleString()} gepostet wurden`;
 
   renderVideos(videos, fromTimestampInfoMessage);

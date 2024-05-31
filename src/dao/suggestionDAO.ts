@@ -32,9 +32,10 @@ export const updateSingleSuggestion = async (
 export const createSingleSuggestion = async (
   data: Omit<DBSuggestion, 'id'>
 ): Promise<DBSuggestion> => {
-  const suggestions = await dbConnection<DBSuggestion>(
-    'suggestions'
-  ).insert(data, ['id', 'videoId', 'username', 'lastSuggestedAt']);
+  const suggestions = await dbConnection<DBSuggestion>('suggestions').insert(
+    data,
+    ['id', 'videoId', 'username', 'lastSuggestedAt']
+  );
 
   return suggestions[0];
 };

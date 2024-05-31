@@ -12,8 +12,8 @@ export const getYoutubeVideoIdFromString = (string: string): string | null => {
   if (!isYoutubeLink) return null;
 
   for (let i = 0; i < youtubeVideoIdPatterns.length; i++) {
-    if (youtubeVideoIdPatterns[i].test(string)) {
-      return youtubeVideoIdPatterns[i].exec(string)![1];
+    if (youtubeVideoIdPatterns[i]!.test(string)) {
+      return youtubeVideoIdPatterns[i]!.exec(string)![1]!;
     }
   }
 

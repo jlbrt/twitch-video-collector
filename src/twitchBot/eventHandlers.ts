@@ -36,7 +36,7 @@ export const handleMessage = async (
       video = await videoDAO.createSingleVideo({
         youtubeId: youtubeVideo.id,
         title: youtubeVideo.title,
-        thumbnail: youtubeVideo.thumbnail,
+        thumbnail: youtubeVideo.thumbnailUrl,
         channelTitle: youtubeVideo.channelTitle,
         viewCount: youtubeVideo.viewCount,
         likeCount: youtubeVideo.likeCount,

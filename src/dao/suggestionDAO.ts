@@ -26,7 +26,7 @@ export const updateSingleSuggestion = async (
     .where(filter)
     .update(data, ['id', 'videoId', 'username', 'lastSuggestedAt']);
 
-  return suggestions[0];
+  return suggestions[0]!;
 };
 
 export const createSingleSuggestion = async (
@@ -37,5 +37,5 @@ export const createSingleSuggestion = async (
     ['id', 'videoId', 'username', 'lastSuggestedAt']
   );
 
-  return suggestions[0];
+  return suggestions[0]!;
 };

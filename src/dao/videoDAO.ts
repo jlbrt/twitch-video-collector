@@ -57,7 +57,7 @@ export const createSingleVideo = async (
     'publishedAt',
   ]);
 
-  return videos[0];
+  return videos[0]!;
 };
 
 export const getVideosWithSuggestions = async (
@@ -108,15 +108,15 @@ export const getVideosWithSuggestions = async (
       };
     }
 
-    videos[suggestion.videoId].votes.push(suggestion.username);
+    videos[suggestion.videoId]!.votes.push(suggestion.username);
 
-    if (videos[suggestion.videoId].lastVote < suggestion.lastSuggestedAt) {
-      videos[suggestion.videoId].lastVote = suggestion.lastSuggestedAt;
+    if (videos[suggestion.videoId]!.lastVote < suggestion.lastSuggestedAt) {
+      videos[suggestion.videoId]!.lastVote = suggestion.lastSuggestedAt;
     }
   }
 
   const returnVideosWithSuggestions = Object.keys(videos).map(
-    (key) => videos[key]
+    (key) => videos[key]!
   );
 
   const returnVideosWithSuggestionsSorted = returnVideosWithSuggestions.sort(

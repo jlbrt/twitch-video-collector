@@ -1,5 +1,5 @@
 {
-  "name": "twitch-video-collector",
+  "name": "twitch-video-grabber",
   "version": "1.6.5",
   "description": "",
   "main": "index.js",

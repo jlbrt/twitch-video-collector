@@ -3,7 +3,7 @@ import * as twitchBot from './twitchBot';
 import * as envValidator from './utils/envValidator';
 import * as webServer from './webserver';
 import * as cronJobs from './cronJobs';
-import { dbConnection } from './DAO/db';
+import { dbConnection } from './DAOs/db';
 
 (async () => {
   await envValidator.validateEnvironmentVars();

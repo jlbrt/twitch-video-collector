@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 import * as logger from '../utils/logger';
-import { dbConnection } from '../DAO/db';
+import { dbConnection } from '../DAOs/db';
 
 export const registerCronjobs = () => {
   const clearDatabaseJob = new CronJob(

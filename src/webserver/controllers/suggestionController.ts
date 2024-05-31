@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import * as videoDAO from '../../DAO/videoDAO';
+import * as videoDAO from '../../DAOs/videoDAO';
 import { z } from 'zod';
 
 export const handleGetSuggestions = async (

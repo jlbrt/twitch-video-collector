@@ -1,7 +1,7 @@
 import tmi from 'tmi.js';
 import * as utils from './utils';
-import * as videoDAO from '../DAO/videoDAO';
-import * as suggestionDAO from '../DAO/suggestionDAO';
+import * as videoDAO from '../DAOs/videoDAO';
+import * as suggestionDAO from '../DAOs/suggestionDAO';
 import * as youtubeAPI from '../api/youtube';
 import * as logger from '../utils/logger';
 

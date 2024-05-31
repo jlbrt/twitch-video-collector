@@ -1,5 +1,7 @@
 {
   "name": "twitch-video-grabber",
+  "module": "src/index.ts",
+  "type": "module",
   "license": "ISC",
   "scripts": {
     "start": "bun src/index.ts",

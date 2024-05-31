@@ -1,13 +1,9 @@
 {
   "name": "twitch-video-grabber",
-  "version": "1.7.0",
   "license": "ISC",
   "scripts": {
     "start": "bun src/index.ts",
     "dev": "bun --watch src/index.ts",
-    "db:migrate": "bun scripts/migrateDB.ts",
-    "db:rollback": "bun scripts/rollbackDB.ts",
-    "db:clear": "bun scripts/clearDB.ts",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write ."
   },

@@ -1,5 +1,5 @@
 # Build
-FROM --platform=linux/amd64 node:18.18.0-alpine as build
+FROM --platform=linux/amd64 node:20.14.0-alpine as build
 
 WORKDIR /usr/src/app
 COPY . .
@@ -8,7 +8,7 @@ RUN npm install
 RUN npm run build
 
 # Production Environment
-FROM --platform=linux/amd64 node:18.18.0-alpine
+FROM --platform=linux/amd64 node:20.14.0-alpine
 
 WORKDIR /usr/src/app
 

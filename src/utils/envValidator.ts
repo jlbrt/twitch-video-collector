@@ -1,19 +1,16 @@
-import Joi from 'joi';
+import { z } from 'zod';
 
 export const validateEnvironmentVars = async () => {
-  const schema = Joi.object({
-    DBHOST: Joi.string().required(),
-    DBPORT: Joi.number().port().required(),
-    DBUSER: Joi.string().required(),
-    DBPASSWORD: Joi.string().required(),
-    DBNAME: Joi.string().required(),
-    TARGETTWITCHCHANNEL: Joi.string().required(),
+  const schema = z.object({
+    DBHOST: z.string(),
+    DBPORT: z.coerce.number().int(),
+    DBUSER: z.string(),
+    DBPASSWORD: z.string(),
+    DBNAME: z.string(),
+    TARGETTWITCHCHANNEL: z.string(),
 
-    YOUTUBEAUTHTOKEN: Joi.string().required(),
-  }).required();
-
-  await schema.validateAsync(process.env, {
-    abortEarly: false,
-    allowUnknown: true,
+    YOUTUBEAUTHTOKEN: z.string(),
   });
+
+  schema.parse(process.env);
 };

@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import { ValidationError } from 'joi';
+import type { Request, Response, NextFunction } from 'express';
 import * as logger from '../utils/logger';
+import { ZodError } from 'zod';
 
 export const handleValidationError = (
   err: Error,
@@ -8,7 +8,7 @@ export const handleValidationError = (
   res: Response,
   next: NextFunction
 ) => {
-  if (err instanceof ValidationError) {
+  if (err instanceof ZodError) {
     return res.status(400).json({
       message: err.message,
     });

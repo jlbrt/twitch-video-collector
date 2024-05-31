@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
-import Joi from 'joi';
+import type { Request, Response, NextFunction } from 'express';
 import * as videoDAO from '../../DAO/videoDAO';
+import { z } from 'zod';
 
 export const handleGetSuggestions = async (
   req: Request,
@@ -8,17 +8,11 @@ export const handleGetSuggestions = async (
   next: NextFunction
 ) => {
   try {
-    const validateReqQuery = (
-      data: any
-    ): Promise<{ fromTimestamp: number }> => {
-      const reqQuerySchema = Joi.object({
-        fromTimestamp: Joi.number().integer().min(0).default(0),
-      }).required();
+    const reqQuerySchema = z.object({
+      fromTimestamp: z.coerce.number().int().nonnegative().default(0),
+    });
 
-      return reqQuerySchema.validateAsync(data);
-    };
-
-    const reqQuery = await validateReqQuery(req.query);
+    const reqQuery = reqQuerySchema.parse(req.query);
     const fromTimestamp = new Date(reqQuery.fromTimestamp);
 
     const videosWithSuggestions =

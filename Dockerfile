@@ -12,7 +12,7 @@ RUN bun install --frozen-lockfile --production
 
 USER bun
 
-COPY . .
+COPY --chown=bun:bun . .
 
 EXPOSE 3000
 

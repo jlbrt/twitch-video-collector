@@ -1,29 +1,22 @@
 {
   "name": "twitch-video-grabber",
   "version": "1.6.5",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node dist/src/index.js",
-    "build": "mkdir -p dist/src/webserver && cp -R ./src/webserver/public ./dist/src/webserver/public && tsc --project tsconfig.json",
-    "dev": "nodemon --config nodemon.json",
-    "db:migrate": "node dist/scripts/migrateDB.js",
-    "db:rollback": "node dist/scripts/rollbackDB.js",
-    "db:clear": "node dist/scripts/clearDB",
-    "db:migrate:dev": "ts-node scripts/migrateDB.ts",
-    "db:rollback:dev": "ts-node scripts/rollbackDB.ts",
-    "lint": "prettier --check ./src ./scripts ./migrations"
-  },
-  "author": "",
   "license": "ISC",
+  "scripts": {
+    "start": "bun src/index.ts",
+    "dev": "bun --watch src/index.ts",
+    "db:migrate": "bun scripts/migrateDB.ts",
+    "db:rollback": "bun scripts/rollbackDB.ts",
+    "db:clear": "bun scripts/clearDB.ts",
+    "lint": "prettier --check .",
+    "lint:fix": "prettier --write ."
+  },
   "devDependencies": {
+    "@types/bun": "latest",
     "@types/cron": "2.4.0",
     "@types/express": "4.17.21",
     "@types/tmi.js": "1.8.4",
-    "nodemon": "3.0.1",
-    "prettier": "3.0.3",
-    "ts-node": "10.9.1",
-    "typescript": "5.2.2"
+    "prettier": "3.0.3"
   },
   "dependencies": {
     "cron": "3.0.0",
@@ -32,5 +25,8 @@
     "knex": "2.5.1",
     "pg": "8.11.3",
     "tmi.js": "1.8.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5.4.5"
   }
 }

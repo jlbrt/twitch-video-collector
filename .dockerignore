@@ -1,5 +1,12 @@
-.git
-.cache
-.env
-node_modules
-dist
+**/node_modules
+**/*.local
+**/.git
+**/.gitignore
+
+**/.vscode
+**/.DS_Store
+**/*Dockerfile*
+
+**/docs
+
+README.md

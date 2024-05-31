@@ -1,16 +1,14 @@
-version: '3'
-
 services:
   app:
-    image: node:20.14.0-alpine
-    working_dir: /usr/src/app
+    image: oven/bun:1.1.10-alpine
+    working_dir: /app
     ports:
       - 3000:3000
       - 9229:9229
     volumes:
-      - .:/usr/src/app
+      - .:/app
     env_file: .env
-    command: ['npm', 'run', 'dev']
+    command: ['bun', 'run', 'dev']
 
   db:
     image: postgres:12

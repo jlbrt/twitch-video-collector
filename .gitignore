@@ -1,4 +1,6 @@
-node_modules
+node_modules/
 dist
 TODO.md
 .env
+*.local
+.DS_Store

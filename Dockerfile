@@ -1,23 +1,19 @@
-# Build
-FROM --platform=linux/amd64 node:20.14.0-alpine as build
+ARG BUN_VERSION=1.1.10
 
-WORKDIR /usr/src/app
-COPY . .
+FROM --platform=linux/amd64 oven/bun:${BUN_VERSION}-alpine
 
-RUN npm install
-RUN npm run build
-
-# Production Environment
-FROM --platform=linux/amd64 node:20.14.0-alpine
-
-WORKDIR /usr/src/app
+WORKDIR /app
 
 ENV NODE_ENV=production
-COPY ./package.json ./package.json
-COPY ./package-lock.json ./package-lock.json
-RUN npm install --production
 
-COPY --from=build /usr/src/app/dist /usr/src/app/dist
+COPY --chown=bun:bun ./package.json ./package.json
+COPY --chown=bun:bun ./bun.lockb ./bun.lockb
+RUN bun install --frozen-lockfile --production
+
+USER bun
+
+COPY . .
 
 EXPOSE 3000
-CMD [ "npm", "run", "start" ]
+
+CMD bun src/index.ts
